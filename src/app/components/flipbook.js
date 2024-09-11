@@ -4,6 +4,7 @@ import { Box, Typography, Link } from '@mui/material';
 import { styled } from '@mui/system';
 
 const Book = styled(Box)(({ theme }) => ({
+  // overflow: 'hidden',
   position: 'relative',
   display: 'flex',
   margin: 'auto',
@@ -13,13 +14,10 @@ const Book = styled(Box)(({ theme }) => ({
   transition: 'translate 1s',
   translate: 'calc(min(var(--c), 1) * 50%) 0%',
   rotate: '1 0 0 30deg',
-  overflow: 'hidden',
-  borderRadius: 'none',
 }));
 
 const Page = styled(Box)(({ theme }) => ({
   '--thickness': '4',
-  borderRadius: 'none',
   flex: 'none',
   display: 'flex',
   width: '100%',
@@ -88,7 +86,7 @@ const FlipBook = () => {
         page.style.setProperty('--i', idx);
         page.addEventListener('click', (evt) => {
           if (evt.target.closest('a')) return;
-          const curr = evt.target.closest("[data-side='back']") ? idx : idx + 1;
+          const curr = evt.target.closest("[side='back']") ? idx : idx + 1;
           elBook.style.setProperty('--c', curr);
         });
       });
@@ -98,7 +96,7 @@ const FlipBook = () => {
   return (
     <Book ref={bookRef}>
       <Page>
-        <Cover data-side="front">
+        <Cover side="front">
           <Typography variant="h4">FlipBook</Typography>
           <Typography>
             2024.
@@ -106,7 +104,7 @@ const FlipBook = () => {
             Second edition
           </Typography>
         </Cover>
-        <PageSide data-side="back" data-page="1">
+        <PageSide side="back" data-page="1">
           <Typography variant="h5">Responsive</Typography>
           <Typography>
             Fully responsive CSS flip book, thanks to the <code>cqmin</code>{' '}
@@ -114,8 +112,17 @@ const FlipBook = () => {
           </Typography>
         </PageSide>
       </Page>
+
       <Page>
-        <PageSide data-side="back" data-page="1">
+        <Cover side="front">
+          <Typography variant="h4">FlipBook</Typography>
+          <Typography>
+            2024.
+            <br />
+            Second edition
+          </Typography>
+        </Cover>
+        <PageSide side="back" data-page="1">
           <Typography variant="h5">Responsive</Typography>
           <Typography>
             Fully responsive CSS flip book, thanks to the <code>cqmin</code>{' '}
@@ -123,33 +130,7 @@ const FlipBook = () => {
           </Typography>
         </PageSide>
       </Page>
-      <Page>
-        <PageSide data-side="back" data-page="1">
-          <Typography variant="h5">Responsive</Typography>
-          <Typography>
-            Fully responsive CSS flip book, thanks to the <code>cqmin</code>{' '}
-            unit.
-          </Typography>
-        </PageSide>
-      </Page>
-      <Page>
-        <PageSide data-side="back" data-page="1">
-          <Typography variant="h5">Responsive</Typography>
-          <Typography>
-            Fully responsive CSS flip book, thanks to the <code>cqmin</code>{' '}
-            unit.
-          </Typography>
-        </PageSide>
-      </Page>
-      <Page>
-        <PageSide data-side="back" data-page="1">
-          <Typography variant="h5">Responsive</Typography>
-          <Typography>
-            Fully responsive CSS flip book, thanks to the <code>cqmin</code>{' '}
-            unit.
-          </Typography>
-        </PageSide>
-      </Page>
+
       {/* Add more pages here */}
     </Book>
   );
