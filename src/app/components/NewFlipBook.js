@@ -100,7 +100,7 @@ const NewFlipBook = () => {
   const pageComponents = [];
   const handlePageClick = (value) => {
     // console.log("value : ",value);
-    setCurr(curr+value);
+    setCurr((prev) => prev+value);
     // console.log(curr);
   };
   // console.log("length : ", Pages.length/2);
@@ -137,7 +137,9 @@ const NewFlipBook = () => {
   }
   return (
     <div>
-      <Book ref={bookRef}>
+      <Book ref={bookRef} sx={{
+        "--c": curr,
+      }}>
         {/* {Pages.map((val,idx) => (
           <Page key={idx}>
             <ImageListItem key={idx}>
