@@ -77,7 +77,7 @@ const PageSide = styled(Box)(({ theme, side }) => ({
   flex: "none",
   width: "100%",
   backfaceVisibility: "hidden",
-  overflow: 'hidden',
+  overflow: "hidden",
   backgroundColor: "#fff",
   translate: side === "back" ? "-100% 0" : "0px",
   rotate: side === "back" ? "0 1 0 180deg" : "0",
@@ -96,11 +96,11 @@ const PageSide = styled(Box)(({ theme, side }) => ({
 
 const NewFlipBook = () => {
   const bookRef = useRef(null);
-  const [curr,setCurr] = useState(0);
+  const [curr, setCurr] = useState(0);
   const pageComponents = [];
   const handlePageClick = (value) => {
     // console.log("value : ",value);
-    setCurr((prev) => prev+value);
+    setCurr((prev) => prev + value);
     // console.log(curr);
   };
   // console.log("length : ", Pages.length/2);
@@ -115,13 +115,33 @@ const NewFlipBook = () => {
         }}
       >
         <PageSide side="front" onClick={() => handlePageClick(1)}>
-          <ImageListItem>
-            <img
-              srcSet={`${Pages[i * 2].image}`}
-              src={`${Pages[i * 2].image}`}
-            />
-            <ImageListItemBar title={Pages[i * 2].description} />
-          </ImageListItem>
+          {i == 0 ? (
+            <video
+              autoPlay
+              muted
+              loop
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                zIndex: -1,
+              }}
+            >
+              <source src="aa.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <ImageListItem>
+              <img
+                srcSet={`${Pages[i * 2].image}`}
+                src={`${Pages[i * 2].image}`}
+              />
+              <ImageListItemBar title={Pages[i * 2].description} />
+            </ImageListItem>
+          )}
         </PageSide>
         <PageSide side="back" onClick={() => handlePageClick(-1)}>
           <ImageListItem>
@@ -137,9 +157,12 @@ const NewFlipBook = () => {
   }
   return (
     <div>
-      <Book ref={bookRef} sx={{
-        "--c": curr,
-      }}>
+      <Book
+        ref={bookRef}
+        sx={{
+          "--c": curr,
+        }}
+      >
         {/* {Pages.map((val,idx) => (
           <Page key={idx}>
             <ImageListItem key={idx}>
