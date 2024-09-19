@@ -1,6 +1,6 @@
 "use client";
 import { Box, ImageListItem, ImageListItemBar } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { styled } from "@mui/system";
 
 const Pages = [
@@ -98,6 +98,7 @@ const NewFlipBook = () => {
   const bookRef = useRef(null);
   const [curr, setCurr] = useState(0);
   const pageComponents = [];
+  const totalPage = Pages.length;
   const handlePageClick = (value) => {
     // console.log("value : ",value);
     setCurr((prev) => prev + value);
@@ -155,6 +156,17 @@ const NewFlipBook = () => {
       </Page>
     );
   }
+  console.log('total Page : ',totalPage);
+  useEffect(()=>{
+    
+    if(curr == totalPage/2) return;
+    const timerId = setInterval(() => {
+      setCurr((prev) => prev +1);
+    }, 2000);
+
+    return () => clearInterval(timerId);
+  },[curr]);
+  console.log("CUrr : ", curr);
   return (
     <div>
       <Book
